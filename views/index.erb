@@ -1,0 +1,232 @@
+<div class="container">
+    <h1 class="main-title">사주 분석</h1>
+    <p class="subtitle">당신의 운명을 읽어드립니다</p>
+    
+    <form action="/calculate" method="post" class="saju-form">
+        <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" required placeholder="이름을 입력하세요">
+        </div>
+        
+        <div class="form-group">
+            <label>성별</label>
+            <div class="gender-select">
+                <input type="radio" id="male" name="gender" value="남" required>
+                <label for="male" class="gender-label">남성</label>
+                
+                <input type="radio" id="female" name="gender" value="여" required>
+                <label for="female" class="gender-label">여성</label>
+            </div>
+        </div>
+        
+        <div class="birth-datetime">
+            <h3>생년월일시</h3>
+            
+            <div class="datetime-grid">
+                <div class="datetime-item">
+                    <label for="year">년도</label>
+                    <select id="year" name="year" required>
+                        <option value="">선택</option>
+                        <% (1940..2024).reverse_each do |y| %>
+                            <option value="<%= y %>"><%= y %>년</option>
+                        <% end %>
+                    </select>
+                </div>
+                
+                <div class="datetime-item">
+                    <label for="month">월</label>
+                    <select id="month" name="month" required>
+                        <option value="">선택</option>
+                        <% (1..12).each do |m| %>
+                            <option value="<%= m %>"><%= m %>월</option>
+                        <% end %>
+                    </select>
+                </div>
+                
+                <div class="datetime-item">
+                    <label for="day">일</label>
+                    <select id="day" name="day" required>
+                        <option value="">선택</option>
+                        <% (1..31).each do |d| %>
+                            <option value="<%= d %>"><%= d %>일</option>
+                        <% end %>
+                    </select>
+                </div>
+                
+                <div class="datetime-item">
+                    <label for="hour">시</label>
+                    <select id="hour" name="hour" required>
+                        <option value="">선택</option>
+                        <% (0..23).each do |h| %>
+                            <option value="<%= h %>"><%= h %>시</option>
+                        <% end %>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <button type="submit" class="submit-btn">사주 분석하기</button>
+    </form>
+</div>
+
+<style>
+    .main-title {
+        font-size: 3.5rem;
+        font-weight: 900;
+        background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    .subtitle {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 40px;
+    }
+    
+    .saju-form {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .form-group label {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #333;
+    }
+    
+    .form-group input[type="text"] {
+        padding: 20px;
+        font-size: 1.2rem;
+        border: 3px solid #e0e0e0;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        background: #f8f8f8;
+    }
+    
+    .form-group input[type="text"]:focus {
+        outline: none;
+        border-color: #667eea;
+        background: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+    }
+    
+    .gender-select {
+        display: flex;
+        gap: 20px;
+    }
+    
+    .gender-select input[type="radio"] {
+        display: none;
+    }
+    
+    .gender-label {
+        padding: 15px 40px;
+        font-size: 1.1rem;
+        border: 3px solid #e0e0e0;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #f8f8f8;
+        text-align: center;
+        flex: 1;
+    }
+    
+    .gender-select input[type="radio"]:checked + .gender-label {
+        background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: transparent;
+        transform: scale(1.05);
+    }
+    
+    .birth-datetime {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 30px;
+        border-radius: 20px;
+    }
+    
+    .birth-datetime h3 {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+    .datetime-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+    }
+    
+    .datetime-item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .datetime-item label {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #555;
+    }
+    
+    .datetime-item select {
+        padding: 15px;
+        font-size: 1.1rem;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .datetime-item select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 3px 15px rgba(102, 126, 234, 0.2);
+    }
+    
+    .submit-btn {
+        padding: 25px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        border: none;
+        border-radius: 15px;
+        background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 20px;
+    }
+    
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(240, 147, 251, 0.4);
+    }
+    
+    .submit-btn:active {
+        transform: translateY(-1px);
+    }
+    
+    @media (max-width: 600px) {
+        .main-title {
+            font-size: 2.5rem;
+        }
+        
+        .datetime-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>

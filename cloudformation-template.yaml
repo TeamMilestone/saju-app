@@ -1,0 +1,109 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Saju App Elastic Beanstalk with SSL and Route53'
+
+Parameters:
+  SSLCertificateArn:
+    Type: String
+    Description: ARN of the SSL certificate from ACM (should cover *.cvvcv.click and *.codingvi.be)
+
+Resources:
+  # Elastic Beanstalk Application
+  SajuApplication:
+    Type: AWS::ElasticBeanstalk::Application
+    Properties:
+      ApplicationName: saju-app
+      Description: Saju Fortune Telling Application
+
+  # Elastic Beanstalk Application Version
+  SajuApplicationVersion:
+    Type: AWS::ElasticBeanstalk::ApplicationVersion
+    Properties:
+      ApplicationName: !Ref SajuApplication
+      Description: Version 1.0
+      SourceBundle:
+        S3Bucket: !Sub '${AWS::StackName}-deployment-bucket'
+        S3Key: saju-app.zip
+
+  # Elastic Beanstalk Configuration Template
+  SajuConfigurationTemplate:
+    Type: AWS::ElasticBeanstalk::ConfigurationTemplate
+    Properties:
+      ApplicationName: !Ref SajuApplication
+      Description: Saju App Configuration
+      SolutionStackName: 64bit Amazon Linux 2 v3.5.0 running Ruby 3.0
+      OptionSettings:
+        # Instance settings
+        - Namespace: aws:autoscaling:launchconfiguration
+          OptionName: InstanceType
+          Value: t3.micro
+        
+        # Load balancer settings
+        - Namespace: aws:elasticbeanstalk:environment
+          OptionName: EnvironmentType
+          Value: LoadBalanced
+        
+        - Namespace: aws:elasticbeanstalk:environment
+          OptionName: LoadBalancerType
+          Value: application
+        
+        # HTTPS Listener
+        - Namespace: aws:elbv2:listener:443
+          OptionName: Protocol
+          Value: HTTPS
+        
+        - Namespace: aws:elbv2:listener:443
+          OptionName: SSLCertificateArns
+          Value: !Ref SSLCertificateArn
+        
+        # HTTP to HTTPS redirect
+        - Namespace: aws:elbv2:listener:80
+          OptionName: Protocol
+          Value: HTTP
+        
+        - Namespace: aws:elbv2:listener:80
+          OptionName: Rules
+          Value: default
+
+  # Elastic Beanstalk Environment
+  SajuEnvironment:
+    Type: AWS::ElasticBeanstalk::Environment
+    Properties:
+      ApplicationName: !Ref SajuApplication
+      EnvironmentName: saju-env
+      TemplateName: !Ref SajuConfigurationTemplate
+      VersionLabel: !Ref SajuApplicationVersion
+
+  # Route53 Record for cvvcv.click
+  SajuDNSRecordCvvcv:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: cvvcv.click.
+      Name: saju.cvvcv.click
+      Type: CNAME
+      TTL: 300
+      ResourceRecords:
+        - !GetAtt SajuEnvironment.EndpointURL
+
+  # Route53 Record for codingvi.be
+  SajuDNSRecordCodingvi:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: codingvi.be.
+      Name: saju.codingvi.be
+      Type: CNAME
+      TTL: 300
+      ResourceRecords:
+        - !GetAtt SajuEnvironment.EndpointURL
+
+Outputs:
+  ApplicationURLCvvcv:
+    Description: URL of the application on cvvcv.click
+    Value: https://saju.cvvcv.click
+  
+  ApplicationURLCodingvi:
+    Description: URL of the application on codingvi.be
+    Value: https://saju.codingvi.be
+  
+  ElasticBeanstalkURL:
+    Description: Elastic Beanstalk environment URL
+    Value: !GetAtt SajuEnvironment.EndpointURL

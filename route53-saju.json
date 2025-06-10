@@ -1,0 +1,17 @@
+{
+    "Changes": [
+        {
+            "Action": "UPSERT",
+            "ResourceRecordSet": {
+                "Name": "saju.cvvcv.click",
+                "Type": "CNAME",
+                "TTL": 300,
+                "ResourceRecords": [
+                    {
+                        "Value": "saju-env.eba-p438umg4.ap-northeast-2.elasticbeanstalk.com"
+                    }
+                ]
+            }
+        }
+    ]
+}

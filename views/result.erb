@@ -1,0 +1,356 @@
+<div class="container result-container">
+    <h1 class="result-title"><%= @name %>님의 사주 분석</h1>
+    
+    <div class="info-grid">
+        <div class="info-item">
+            <span class="info-label">성별</span>
+            <span class="info-value"><%= @gender %></span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">생년월일시</span>
+            <span class="info-value"><%= @year %>년 <%= @month %>월 <%= @day %>일 <%= @hour %>시</span>
+        </div>
+    </div>
+    
+    <div class="saju-section">
+        <h2>사주원국</h2>
+        <div class="saju-pillars">
+            <div class="pillar">
+                <div class="pillar-title">년주</div>
+                <div class="pillar-value"><%= @year_pillar %></div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-title">월주</div>
+                <div class="pillar-value"><%= @month_pillar %></div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-title">일주</div>
+                <div class="pillar-value"><%= @day_pillar %></div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-title">시주</div>
+                <div class="pillar-value"><%= @hour_pillar %></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="analysis-grid">
+        <div class="analysis-section">
+            <h3>십신 (천간)</h3>
+            <div class="analysis-content">
+                <div class="analysis-item">년: <%= @year_stem_ten_god %></div>
+                <div class="analysis-item">월: <%= @month_stem_ten_god %></div>
+                <div class="analysis-item">일: 일간</div>
+                <div class="analysis-item">시: <%= @hour_stem_ten_god %></div>
+            </div>
+        </div>
+        
+        <div class="analysis-section">
+            <h3>십신 (지지)</h3>
+            <div class="analysis-content">
+                <div class="analysis-item">년: <%= @year_branch_ten_god %></div>
+                <div class="analysis-item">월: <%= @month_branch_ten_god %></div>
+                <div class="analysis-item">일: <%= @day_branch_ten_god %></div>
+                <div class="analysis-item">시: <%= @hour_branch_ten_god %></div>
+            </div>
+        </div>
+        
+        <div class="analysis-section">
+            <h3>12운성</h3>
+            <div class="analysis-content">
+                <div class="analysis-item">년: <%= @year_unseong %></div>
+                <div class="analysis-item">월: <%= @month_unseong %></div>
+                <div class="analysis-item">일: <%= @day_unseong %></div>
+                <div class="analysis-item">시: <%= @hour_unseong %></div>
+            </div>
+        </div>
+        
+        <div class="analysis-section">
+            <h3>용신</h3>
+            <div class="yongshin"><%= @yongshin %></div>
+        </div>
+    </div>
+    
+    <div class="prompt-section">
+        <h3>ChatGPT 프롬프트</h3>
+        <div class="prompt-box" id="prompt-text">
+안녕하세요. 제 사주를 분석해주세요.
+
+성별: <%= @gender %>
+생년월일시: <%= @year %>년 <%= @month %>월 <%= @day %>일 <%= @hour %>시
+
+사주원국:
+- 년주: <%= @year_pillar %>
+- 월주: <%= @month_pillar %>
+- 일주: <%= @day_pillar %>
+- 시주: <%= @hour_pillar %>
+
+십신 (천간):
+- 년: <%= @year_stem_ten_god %>
+- 월: <%= @month_stem_ten_god %>
+- 일: 일간
+- 시: <%= @hour_stem_ten_god %>
+
+십신 (지지):
+- 년: <%= @year_branch_ten_god %>
+- 월: <%= @month_branch_ten_god %>
+- 일: <%= @day_branch_ten_god %>
+- 시: <%= @hour_branch_ten_god %>
+
+12운성:
+- 년: <%= @year_unseong %>
+- 월: <%= @month_unseong %>
+- 일: <%= @day_unseong %>
+- 시: <%= @hour_unseong %>
+
+용신: <%= @yongshin %>
+
+이 사주를 바탕으로 성격, 재물운, 직업운, 연애운, 건강운을 분석해주세요.
+        </div>
+        <button class="copy-btn" onclick="copyPrompt()">프롬프트 복사하기</button>
+    </div>
+    
+    <div class="action-buttons">
+        <button class="share-btn" onclick="shareResult()">결과 공유하기</button>
+        <a href="/" class="new-btn">새로운 사주 보기</a>
+    </div>
+</div>
+
+<style>
+    .result-container {
+        max-width: 900px;
+    }
+    
+    .result-title {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+    }
+    
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+        padding: 20px;
+        background: #f8f8f8;
+        border-radius: 15px;
+    }
+    
+    .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .info-label {
+        font-size: 0.9rem;
+        color: #666;
+    }
+    
+    .info-value {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+    }
+    
+    .saju-section {
+        margin-bottom: 40px;
+    }
+    
+    .saju-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: #667eea;
+    }
+    
+    .saju-pillars {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    
+    .pillar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px 20px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+    }
+    
+    .pillar-title {
+        font-size: 1rem;
+        margin-bottom: 10px;
+        opacity: 0.9;
+    }
+    
+    .pillar-value {
+        font-size: 2rem;
+        font-weight: 700;
+    }
+    
+    .analysis-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+    
+    .analysis-section {
+        background: #f5f7fa;
+        padding: 25px;
+        border-radius: 15px;
+    }
+    
+    .analysis-section h3 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        color: #764ba2;
+    }
+    
+    .analysis-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .analysis-item {
+        font-size: 1.1rem;
+        padding: 8px;
+        background: white;
+        border-radius: 8px;
+    }
+    
+    .yongshin {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        color: #f5576c;
+    }
+    
+    .prompt-section {
+        background: #2d3748;
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .prompt-section h3 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+    
+    .prompt-box {
+        background: #1a202c;
+        padding: 20px;
+        border-radius: 10px;
+        font-family: monospace;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        margin-bottom: 20px;
+    }
+    
+    .copy-btn {
+        background: #48bb78;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .copy-btn:hover {
+        background: #38a169;
+        transform: translateY(-2px);
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+    }
+    
+    .share-btn, .new-btn {
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+    }
+    
+    .share-btn {
+        background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+    }
+    
+    .new-btn {
+        background: #e0e0e0;
+        color: #333;
+        display: inline-block;
+        text-align: center;
+    }
+    
+    .share-btn:hover, .new-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    @media (max-width: 768px) {
+        .saju-pillars {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .analysis-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .action-buttons {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<script>
+    function copyPrompt() {
+        const promptText = document.getElementById('prompt-text').textContent;
+        navigator.clipboard.writeText(promptText).then(function() {
+            alert('프롬프트가 클립보드에 복사되었습니다!');
+        }, function(err) {
+            alert('복사 실패: ' + err);
+        });
+    }
+    
+    function shareResult() {
+        const url = window.location.href;
+        if (navigator.share) {
+            navigator.share({
+                title: '사주 분석 결과',
+                text: '나의 사주 분석 결과를 확인해보세요!',
+                url: url
+            }).then(() => {
+                console.log('공유 성공');
+            }).catch((error) => {
+                console.log('공유 실패:', error);
+            });
+        } else {
+            navigator.clipboard.writeText(url).then(function() {
+                alert('링크가 클립보드에 복사되었습니다!');
+            }, function(err) {
+                alert('복사 실패: ' + err);
+            });
+        }
+    }
+</script>

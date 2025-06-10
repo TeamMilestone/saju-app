@@ -1,0 +1,8 @@
+0000000000000000000000000000000000000000 36638e5351cba6e5c52231c3307c52adc437c01a alfonso <alfonso@team-milestone.io> 1749565394 +0900	commit (initial): Initial commit for saju app
+36638e5351cba6e5c52231c3307c52adc437c01a fbd6b725f66e7b2b99a943979f532d5dbd582d03 alfonso <alfonso@team-milestone.io> 1749566139 +0900	commit: Add UUID-based security for user data access
+fbd6b725f66e7b2b99a943979f532d5dbd582d03 1ce64c33dc319fe2a0ae050a6fc54a62027b2834 alfonso <alfonso@team-milestone.io> 1749567021 +0900	commit: Remove securerandom gem dependency - included in Ruby 3.4 stdlib
+1ce64c33dc319fe2a0ae050a6fc54a62027b2834 a14358a5e9fbfe9c6e01fb04bccdb10cf3c289e4 alfonso <alfonso@team-milestone.io> 1749568125 +0900	commit: Fix SQLite database locking issues for production
+a14358a5e9fbfe9c6e01fb04bccdb10cf3c289e4 eb3ea71c0ee7fbac3a63f33758dd32e82fd343ee alfonso <alfonso@team-milestone.io> 1749568380 +0900	commit: Remove HTTPS redirect temporarily to fix HTTP access
+eb3ea71c0ee7fbac3a63f33758dd32e82fd343ee 887bf8fe31cb8c99a4da2a42dc004dcf68ab4b09 alfonso <alfonso@team-milestone.io> 1749568793 +0900	commit: Add HTTPS listener configuration for SSL certificate
+887bf8fe31cb8c99a4da2a42dc004dcf68ab4b09 f670d64ccb17d2f6cd57bba5ee874a84e971d0a9 alfonso <alfonso@team-milestone.io> 1749568970 +0900	commit: Update SSL certificate ARN to validated cvvcv.click certificate
+f670d64ccb17d2f6cd57bba5ee874a84e971d0a9 f049179323ee04d6ffbf2c840d800f1d4248ba04 alfonso <alfonso@team-milestone.io> 1749569101 +0900	commit: Add HTTP to HTTPS redirect configuration
