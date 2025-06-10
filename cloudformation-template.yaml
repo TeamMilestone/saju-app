@@ -3,8 +3,9 @@ Description: 'Saju App Elastic Beanstalk with SSL and Route53'
 
 Parameters:
   SSLCertificateArn:
-    Type: String
-    Description: ARN of the SSL certificate from ACM (should cover *.cvvcv.click and *.codingvi.be)
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /saju-app/ssl-certificate-arn
+    Description: ARN of the SSL certificate from ACM (retrieved from Parameter Store)
 
 Resources:
   # Elastic Beanstalk Application
