@@ -23,12 +23,25 @@ pip install awscli awsebcli
 aws configure
 ```
 
-2. **SSL 인증서 ARN을 Parameter Store에 저장:**
+2. **기존 SSL 인증서 ARN 찾기:**
 ```bash
-# 현재 인증서 ARN을 Parameter Store에 저장
+# 방법 1: AWS CLI로 모든 인증서 조회
+aws acm list-certificates --region ap-northeast-2
+
+# 방법 2: 특정 도메인으로 필터링
+aws acm list-certificates --region ap-northeast-2 \
+  --query "CertificateSummaryList[?contains(DomainName,'cvvcv.click')]"
+
+# 방법 3: 기존 백업에서 확인
+grep -r "arn:aws:acm" .git_backup/
+```
+
+3. **SSL 인증서 ARN을 Parameter Store에 저장:**
+```bash
+# 위에서 찾은 인증서 ARN을 Parameter Store에 저장
 aws ssm put-parameter \
   --name "/saju-app/ssl-certificate-arn" \
-  --value "arn:aws:acm:ap-northeast-2:YOUR_ACCOUNT_ID:certificate/YOUR_CERT_ID" \
+  --value "arn:aws:acm:ap-northeast-2:258844523519:certificate/9b1d790a-44d6-4309-804b-074b662fee29" \
   --type "String" \
   --region ap-northeast-2
 
@@ -36,7 +49,7 @@ aws ssm put-parameter \
 aws ssm get-parameter --name "/saju-app/ssl-certificate-arn" --region ap-northeast-2
 ```
 
-3. **기타 환경변수들을 Parameter Store에 저장 (필요한 경우):**
+4. **기타 환경변수들을 Parameter Store에 저장 (필요한 경우):**
 ```bash
 # OpenAI API Key (SecureString으로 암호화 저장)
 aws ssm put-parameter \
@@ -103,6 +116,7 @@ eb setenv \
 - **보안**: 민감한 정보는 `SecureString` 타입 사용
 - **지역 설정**: 모든 리소스가 `ap-northeast-2` 리전에 생성됨
 - **SSL 인증서**: 현재 `*.cvvcv.click` 와일드카드 인증서 사용
+- **환경설정**: 자세한 환경변수 관리 방법은 [ENVIRONMENT.md](ENVIRONMENT.md) 참조
 
 ### 문제 해결
 
