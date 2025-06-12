@@ -54,3 +54,14 @@ config/application.yml
 api_keys.txt
 tokens.txt
 secrets.txt
+
+# Cloudflare 설정 파일 (보안)
+.cloudflare-config
+
+# 데이터베이스 추가 파일
+*.db-shm
+*.db-wal
+
+# 시스템 파일
+.DS_Store
+Thumbs.db
