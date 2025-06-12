@@ -8,7 +8,7 @@
                 "TTL": 300,
                 "ResourceRecords": [
                     {
-                        "Value": "saju-env.eba-p438umg4.ap-northeast-2.elasticbeanstalk.com"
+                        "Value": "saju-simple.eba-p438umg4.ap-northeast-2.elasticbeanstalk.com"
                     }
                 ]
             }

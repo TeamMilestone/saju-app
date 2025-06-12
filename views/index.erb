@@ -220,13 +220,72 @@
         transform: translateY(-1px);
     }
     
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
         .main-title {
-            font-size: 2.5rem;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        
+        .saju-form {
+            gap: 20px;
+        }
+        
+        .form-group input[type="text"] {
+            padding: 15px;
+            font-size: 1rem;
+        }
+        
+        .gender-label {
+            padding: 12px 25px;
+            font-size: 1rem;
+        }
+        
+        .birth-datetime {
+            padding: 20px;
+        }
+        
+        .birth-datetime h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
         }
         
         .datetime-grid {
             grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .datetime-item label {
+            font-size: 0.9rem;
+        }
+        
+        .datetime-item select {
+            padding: 12px;
+            font-size: 1rem;
+        }
+        
+        .submit-btn {
+            padding: 20px;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .main-title {
+            font-size: 1.8rem;
+        }
+        
+        .gender-select {
+            flex-direction: column;
+        }
+        
+        .gender-label {
+            width: 100%;
         }
     }
 </style>

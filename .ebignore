@@ -1,0 +1,16 @@
+# 문서 파일들
+*.md
+cloudformation-template.yaml*
+route53-*.json
+
+# 테스트 파일들
+test_*.rb
+security-demo.rb
+
+# Git 관련
+.git*
+.gitignore
+
+# 기타
+.DS_Store
+saju.db-*

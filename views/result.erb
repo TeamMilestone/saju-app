@@ -309,16 +309,86 @@
     }
     
     @media (max-width: 768px) {
+        .result-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
         .saju-pillars {
             grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .pillar {
+            padding: 20px 15px;
+        }
+        
+        .pillar-value {
+            font-size: 1.5rem;
         }
         
         .analysis-grid {
             grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .analysis-section {
+            padding: 20px;
+        }
+        
+        .analysis-section h3 {
+            font-size: 1.2rem;
+        }
+        
+        .prompt-section {
+            padding: 20px;
+        }
+        
+        .prompt-box {
+            padding: 15px;
+            font-size: 0.8rem;
+            overflow-x: auto;
         }
         
         .action-buttons {
             flex-direction: column;
+            gap: 15px;
+        }
+        
+        .share-btn, .new-btn {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .result-title {
+            font-size: 1.5rem;
+        }
+        
+        .info-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+            padding: 15px;
+        }
+        
+        .saju-section h2 {
+            font-size: 1.5rem;
+        }
+        
+        .pillar-value {
+            font-size: 1.3rem;
+        }
+        
+        .yongshin {
+            font-size: 1.5rem;
+            padding: 15px;
+        }
+        
+        .copy-btn {
+            width: 100%;
+            padding: 12px 20px;
         }
     }
 </style>

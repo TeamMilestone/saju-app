@@ -1,0 +1,689 @@
+<div class="container">
+    <h1 class="main-title">사주 분석</h1>
+    <p class="subtitle">당신의 생일을 알려주세요</p>
+    
+    <!-- 진행 상황 표시 -->
+    <div class="progress-bar">
+        <div class="progress-step active" data-step="1">월</div>
+        <div class="progress-step" data-step="2">일</div>
+        <div class="progress-step" data-step="3">시간</div>
+        <div class="progress-step" data-step="4">연도</div>
+    </div>
+
+    <!-- 월 선택 단계 -->
+    <div id="month-selection" class="selection-step active">
+        <h2 class="step-title">월을 선택하세요</h2>
+        <div class="month-grid">
+            <button class="month-btn" data-month="1">1월</button>
+            <button class="month-btn" data-month="2">2월</button>
+            <button class="month-btn" data-month="3">3월</button>
+            <button class="month-btn" data-month="4">4월</button>
+            <button class="month-btn" data-month="5">5월</button>
+            <button class="month-btn" data-month="6">6월</button>
+            <button class="month-btn" data-month="7">7월</button>
+            <button class="month-btn" data-month="8">8월</button>
+            <button class="month-btn" data-month="9">9월</button>
+            <button class="month-btn" data-month="10">10월</button>
+            <button class="month-btn" data-month="11">11월</button>
+            <button class="month-btn" data-month="12">12월</button>
+        </div>
+    </div>
+
+    <!-- 일 선택 단계 -->
+    <div id="day-selection" class="selection-step">
+        <h2 class="step-title">일을 선택하세요</h2>
+        <div class="day-grid" id="day-grid">
+            <!-- JavaScript로 동적 생성 -->
+        </div>
+    </div>
+
+    <!-- 시간 선택 단계 -->
+    <div id="time-selection" class="selection-step">
+        <h2 class="step-title">시간을 선택하세요</h2>
+        <div class="time-grid">
+            <button class="time-btn" data-time="23-1" data-korean="자시">자시 (23시-1시)</button>
+            <button class="time-btn" data-time="1-3" data-korean="축시">축시 (1시-3시)</button>
+            <button class="time-btn" data-time="3-5" data-korean="인시">인시 (3시-5시)</button>
+            <button class="time-btn" data-time="5-7" data-korean="묘시">묘시 (5시-7시)</button>
+            <button class="time-btn" data-time="7-9" data-korean="진시">진시 (7시-9시)</button>
+            <button class="time-btn" data-time="9-11" data-korean="사시">사시 (9시-11시)</button>
+            <button class="time-btn" data-time="11-13" data-korean="오시">오시 (11시-13시)</button>
+            <button class="time-btn" data-time="13-15" data-korean="미시">미시 (13시-15시)</button>
+            <button class="time-btn" data-time="15-17" data-korean="신시">신시 (15시-17시)</button>
+            <button class="time-btn" data-time="17-19" data-korean="유시">유시 (17시-19시)</button>
+            <button class="time-btn" data-time="19-21" data-korean="술시">술시 (19시-21시)</button>
+            <button class="time-btn" data-time="21-23" data-korean="해시">해시 (21시-23시)</button>
+        </div>
+    </div>
+
+    <!-- 연도 선택 단계 -->
+    <div id="year-selection" class="selection-step">
+        <h2 class="step-title">태어난 연도를 선택하세요</h2>
+        <div class="year-grid" id="year-grid">
+            <!-- JavaScript로 동적 생성 -->
+        </div>
+    </div>
+
+    <!-- 선택된 값 표시 -->
+    <div class="selected-values">
+        <span id="selected-month"></span>
+        <span id="selected-day"></span>
+        <span id="selected-time"></span>
+        <span id="selected-year"></span>
+    </div>
+
+    <!-- 뒤로가기 버튼 -->
+    <button id="back-btn" class="back-btn" style="display: none;">뒤로</button>
+    
+    <!-- 완료 버튼 -->
+    <button id="complete-btn" class="complete-btn" style="display: none;">사주 분석하기</button>
+</div>
+
+<style>
+    .main-title {
+        font-size: 3.5rem;
+        font-weight: 900;
+        background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    .subtitle {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    .progress-bar {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        padding: 0 20px;
+    }
+
+    .progress-step {
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        background: #f0f0f0;
+        margin: 0 5px;
+        border-radius: 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .progress-step.active {
+        background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        transform: scale(1.05);
+    }
+
+    .progress-step.completed {
+        background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+    }
+
+    .selection-step {
+        display: none;
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    .selection-step.active {
+        display: block;
+    }
+
+    .step-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+    }
+
+    .month-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .month-btn, .day-btn, .time-btn, .year-btn {
+        padding: 20px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border: 3px solid #e0e0e0;
+        border-radius: 15px;
+        background: #f8f8f8;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        transform: translateY(10px);
+        opacity: 0;
+        animation: slideInUp 0.5s ease-out forwards;
+    }
+
+    .month-btn:nth-child(1) { animation-delay: 0.1s; }
+    .month-btn:nth-child(2) { animation-delay: 0.15s; }
+    .month-btn:nth-child(3) { animation-delay: 0.2s; }
+    .month-btn:nth-child(4) { animation-delay: 0.25s; }
+    .month-btn:nth-child(5) { animation-delay: 0.3s; }
+    .month-btn:nth-child(6) { animation-delay: 0.35s; }
+    .month-btn:nth-child(7) { animation-delay: 0.4s; }
+    .month-btn:nth-child(8) { animation-delay: 0.45s; }
+    .month-btn:nth-child(9) { animation-delay: 0.5s; }
+    .month-btn:nth-child(10) { animation-delay: 0.55s; }
+    .month-btn:nth-child(11) { animation-delay: 0.6s; }
+    .month-btn:nth-child(12) { animation-delay: 0.65s; }
+
+    .day-btn {
+        transform: translateY(10px);
+        opacity: 0;
+        animation: slideInUp 0.4s ease-out forwards;
+    }
+
+    .month-btn:hover, .day-btn:hover, .time-btn:hover, .year-btn:hover {
+        background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: transparent;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .month-btn.selected, .day-btn.selected, .time-btn.selected, .year-btn.selected {
+        background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border-color: transparent;
+        transform: scale(1.05);
+    }
+
+    .day-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+
+    .time-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .time-btn {
+        padding: 25px;
+        font-size: 1.1rem;
+        text-align: left;
+    }
+
+    .year-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 10px;
+        border-radius: 15px;
+        background: rgba(0,0,0,0.05);
+    }
+
+    .year-btn {
+        padding: 15px;
+        font-size: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .year-zodiac {
+        font-size: 0.9rem;
+        color: #666;
+        font-weight: 400;
+    }
+
+    .selected-values {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+    }
+
+    .selected-values span {
+        background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .back-btn, .complete-btn {
+        width: 100%;
+        padding: 20px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .back-btn {
+        background: #f0f0f0;
+        color: #666;
+    }
+
+    .back-btn:hover {
+        background: #e0e0e0;
+        transform: translateY(-2px);
+    }
+
+    .complete-btn {
+        background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .complete-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(240, 147, 251, 0.4);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-title {
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+
+        .progress-step {
+            font-size: 0.9rem;
+            padding: 8px;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .month-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .month-btn, .day-btn, .time-btn, .year-btn {
+            padding: 15px;
+            font-size: 1rem;
+        }
+
+        .day-grid {
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            padding: 8px;
+        }
+        
+        .day-btn {
+            padding: 10px 5px;
+            font-size: 0.9rem;
+        }
+
+        .time-grid {
+            grid-template-columns: repeat(1, 1fr);
+            gap: 10px;
+        }
+
+        .time-btn {
+            padding: 20px;
+            font-size: 1rem;
+        }
+
+        .year-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .year-btn {
+            padding: 12px;
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .main-title {
+            font-size: 2rem;
+        }
+
+        .month-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .year-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .day-grid {
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            padding: 5px;
+        }
+        
+        .day-btn {
+            padding: 8px 3px;
+            font-size: 0.8rem;
+        }
+
+        .selected-values {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+
+<script>
+class BirthInputHandler {
+    constructor() {
+        this.selectedMonth = null;
+        this.selectedDay = null;
+        this.selectedTime = null;
+        this.selectedYear = null;
+        this.currentStep = 1;
+        
+        // 각 단계의 컨테이너 요소를 미리 찾아둡니다.
+        this.steps = {
+            1: document.getElementById('month-selection'),
+            2: document.getElementById('day-selection'),
+            3: document.getElementById('time-selection'),
+            4: document.getElementById('year-selection')
+        };
+
+        this.initializeEventListeners();
+    }
+
+    initializeEventListeners() {
+        // 이벤트 위임을 사용하여 각 단계의 컨테이너에 이벤트 리스너를 설정합니다.
+        document.getElementById('month-selection').addEventListener('click', (e) => {
+            if (e.target.classList.contains('month-btn')) {
+                this.selectMonth(parseInt(e.target.dataset.month));
+            }
+        });
+
+        document.getElementById('day-selection').addEventListener('click', (e) => {
+            if (e.target.classList.contains('day-btn')) {
+                this.selectDay(parseInt(e.target.dataset.day));
+            }
+        });
+
+        document.getElementById('time-selection').addEventListener('click', (e) => {
+            if (e.target.classList.contains('time-btn')) {
+                this.selectTime(e.target.dataset.time, e.target.dataset.korean);
+            }
+        });
+
+        document.getElementById('year-selection').addEventListener('click', (e) => {
+            if (e.target.classList.contains('year-btn')) {
+                const year = parseInt(e.target.dataset.year);
+                const zodiacElement = e.target.querySelector('.year-zodiac');
+                const zodiac = zodiacElement ? zodiacElement.textContent.replace('띠','') : '';
+                this.selectYear(year, zodiac);
+            }
+        });
+
+        // 뒤로가기 및 완료 버튼 이벤트 리스너
+        document.getElementById('back-btn').addEventListener('click', () => {
+            this.goToPreviousStep();
+        });
+
+        document.getElementById('complete-btn').addEventListener('click', () => {
+            this.completeBirthInput();
+        });
+    }
+
+    selectMonth(month) {
+        this.selectedMonth = month;
+        document.querySelectorAll('.month-btn').forEach(btn => btn.classList.remove('selected'));
+        document.querySelector(`[data-month="${month}"]`).classList.add('selected');
+        
+        setTimeout(() => {
+            this.generateDayButtons(month);
+            this.goToNextStep();
+        }, 300);
+    }
+
+    generateDayButtons(month) {
+        const dayGrid = document.getElementById('day-grid');
+        dayGrid.innerHTML = '';
+        
+        const daysInMonth = this.getDaysInMonth(month);
+        
+        for (let day = 1; day <= daysInMonth; day++) {
+            const btn = document.createElement('button');
+            btn.className = 'day-btn';
+            btn.dataset.day = day;
+            btn.textContent = day;
+            btn.style.animationDelay = `${day * 0.015}s`;
+            dayGrid.appendChild(btn);
+        }
+    }
+
+    getDaysInMonth(month) {
+        // 2월은 윤년과 관계없이 사주 명리학에서는 29일을 기준으로 하는 경우가 많아 29일로 고정합니다.
+        const daysPerMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        return daysPerMonth[month - 1];
+    }
+
+    selectDay(day) {
+        this.selectedDay = day;
+        document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('selected'));
+        document.querySelector(`[data-day="${day}"]`).classList.add('selected');
+        
+        setTimeout(() => {
+            this.goToNextStep();
+        }, 300);
+    }
+
+    selectTime(time, korean) {
+        this.selectedTime = { time, korean };
+        document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('selected'));
+        document.querySelector(`[data-time="${time}"]`).classList.add('selected');
+        
+        setTimeout(() => {
+            this.generateYearButtons();
+            this.goToNextStep();
+        }, 300);
+    }
+
+    generateYearButtons() {
+        const yearGrid = document.getElementById('year-grid');
+        yearGrid.innerHTML = '';
+        
+        const zodiacAnimals = ['쥐', '소', '호랑이', '토끼', '용', '뱀', '말', '양', '원숭이', '닭', '개', '돼지'];
+        const lunarNewYear = { 
+            1920: new Date(1920, 1, 20), 1921: new Date(1921, 1, 8), 1922: new Date(1922, 0, 28), 
+            1923: new Date(1923, 1, 16), 1924: new Date(1924, 1, 5), 1925: new Date(1925, 0, 24), 
+            1926: new Date(1926, 1, 13), 1927: new Date(1927, 1, 2), 1928: new Date(1928, 0, 23), 
+            1929: new Date(1929, 1, 10), 1930: new Date(1930, 0, 30), 1931: new Date(1931, 1, 17), 
+            1932: new Date(1932, 1, 6), 1933: new Date(1933, 0, 26), 1934: new Date(1934, 1, 14), 
+            1935: new Date(1935, 1, 4), 1936: new Date(1936, 0, 24), 1937: new Date(1937, 1, 11), 
+            1938: new Date(1938, 0, 31), 1939: new Date(1939, 1, 19), 1940: new Date(1940, 1, 8), 
+            1941: new Date(1941, 0, 27), 1942: new Date(1942, 1, 15), 1943: new Date(1943, 1, 4), 
+            1944: new Date(1944, 0, 25), 1945: new Date(1945, 1, 13), 1946: new Date(1946, 1, 1), 
+            1947: new Date(1947, 0, 22), 1948: new Date(1948, 1, 10), 1949: new Date(1949, 0, 29), 
+            1950: new Date(1950, 1, 17), 1951: new Date(1951, 1, 6), 1952: new Date(1952, 0, 27), 
+            1953: new Date(1953, 1, 14), 1954: new Date(1954, 1, 3), 1955: new Date(1955, 0, 24), 
+            1956: new Date(1956, 1, 12), 1957: new Date(1957, 0, 31), 1958: new Date(1958, 1, 18), 
+            1959: new Date(1959, 1, 8), 1960: new Date(1960, 0, 28), 1961: new Date(1961, 1, 15), 
+            1962: new Date(1962, 1, 5), 1963: new Date(1963, 0, 25), 1964: new Date(1964, 1, 13), 
+            1965: new Date(1965, 1, 2), 1966: new Date(1966, 0, 21), 1967: new Date(1967, 1, 9), 
+            1968: new Date(1968, 0, 30), 1969: new Date(1969, 1, 17), 1970: new Date(1970, 1, 6), 
+            1971: new Date(1971, 0, 27), 1972: new Date(1972, 1, 15), 1973: new Date(1973, 1, 3), 
+            1974: new Date(1974, 0, 23), 1975: new Date(1975, 1, 11), 1976: new Date(1976, 0, 31), 
+            1977: new Date(1977, 1, 18), 1978: new Date(1978, 1, 7), 1979: new Date(1979, 0, 28), 
+            1980: new Date(1980, 1, 16), 1981: new Date(1981, 1, 5), 1982: new Date(1982, 0, 25), 
+            1983: new Date(1983, 1, 13), 1984: new Date(1984, 1, 2), 1985: new Date(1985, 1, 20), 
+            1986: new Date(1986, 1, 9), 1987: new Date(1987, 0, 29), 1988: new Date(1988, 1, 17), 
+            1989: new Date(1989, 1, 6), 1990: new Date(1990, 0, 27), 1991: new Date(1991, 1, 15), 
+            1992: new Date(1992, 1, 4), 1993: new Date(1993, 0, 23), 1994: new Date(1994, 1, 10), 
+            1995: new Date(1995, 0, 31), 1996: new Date(1996, 1, 19), 1997: new Date(1997, 1, 7), 
+            1998: new Date(1998, 0, 28), 1999: new Date(1999, 1, 16), 2000: new Date(2000, 1, 5), 
+            2001: new Date(2001, 0, 24), 2002: new Date(2002, 1, 12), 2003: new Date(2003, 1, 1), 
+            2004: new Date(2004, 0, 22), 2005: new Date(2005, 1, 9), 2006: new Date(2006, 0, 29), 
+            2007: new Date(2007, 1, 18), 2008: new Date(2008, 1, 7), 2009: new Date(2009, 0, 26), 
+            2010: new Date(2010, 1, 14), 2011: new Date(2011, 1, 3), 2012: new Date(2012, 0, 23), 
+            2013: new Date(2013, 1, 10), 2014: new Date(2014, 0, 31), 2015: new Date(2015, 1, 19), 
+            2016: new Date(2016, 1, 8), 2017: new Date(2017, 0, 28), 2018: new Date(2018, 1, 16), 
+            2019: new Date(2019, 1, 5), 2020: new Date(2020, 0, 25), 2021: new Date(2021, 1, 12), 
+            2022: new Date(2022, 1, 1), 2023: new Date(2023, 0, 22), 2024: new Date(2024, 1, 10), 
+            2025: new Date(2025, 0, 29), 2026: new Date(2026, 1, 17), 2027: new Date(2027, 1, 6), 
+            2028: new Date(2028, 0, 26), 2029: new Date(2029, 1, 13), 2030: new Date(2030, 1, 3) 
+        };
+        
+        for (let year = 2030; year >= 1920; year--) {
+            const birthDate = new Date(year, this.selectedMonth - 1, this.selectedDay);
+            const newYearDate = lunarNewYear[year] || new Date(year, 0, 1);
+            const zodiacYear = birthDate < newYearDate ? year - 1 : year;
+            const zodiac = zodiacAnimals[(zodiacYear - 4) % 12];
+            
+            const btn = document.createElement('button');
+            btn.className = 'year-btn';
+            btn.dataset.year = year;
+            btn.innerHTML = `<span>${year}년</span><span class="year-zodiac">${zodiac}띠</span>`;
+            btn.style.animationDelay = `${(2030 - year) * 0.01}s`;
+            
+            yearGrid.appendChild(btn);
+        }
+    }
+
+    selectYear(year, zodiac) {
+        this.selectedYear = { year, zodiac };
+        document.querySelectorAll('.year-btn').forEach(btn => btn.classList.remove('selected'));
+        document.querySelector(`[data-year="${year}"]`).classList.add('selected');
+        
+        this.updateSelectedValues();
+        this.showCompleteButton();
+    }
+
+    goToNextStep() {
+        // 현재 스텝 비활성화
+        if (this.steps[this.currentStep]) {
+            this.steps[this.currentStep].classList.remove('active');
+        }
+
+        this.currentStep++;
+
+        // 다음 스텝 활성화
+        if (this.steps[this.currentStep]) {
+            this.steps[this.currentStep].classList.add('active');
+        }
+
+        this.updateProgressBar();
+        this.updateSelectedValues();
+        
+        if (this.currentStep > 1) {
+            document.getElementById('back-btn').style.display = 'block';
+        }
+    }
+
+    goToPreviousStep() {
+        if (this.currentStep > 1) {
+            // 현재 스텝 비활성화
+            if (this.steps[this.currentStep]) {
+                this.steps[this.currentStep].classList.remove('active');
+            }
+            
+            this.currentStep--;
+            
+            // 이전 스텝 활성화
+            if (this.steps[this.currentStep]) {
+                this.steps[this.currentStep].classList.add('active');
+            }
+            
+            this.updateProgressBar();
+            
+            if (this.currentStep === 1) {
+                document.getElementById('back-btn').style.display = 'none';
+            }
+            
+            document.getElementById('complete-btn').style.display = 'none';
+        }
+    }
+
+    updateProgressBar() {
+        document.querySelectorAll('.progress-step').forEach((step, index) => {
+            const stepNumber = index + 1;
+            step.classList.remove('active', 'completed');
+            if (stepNumber === this.currentStep) {
+                step.classList.add('active');
+            } else if (stepNumber < this.currentStep) {
+                step.classList.add('completed');
+            }
+        });
+    }
+
+    updateSelectedValues() {
+        document.getElementById('selected-month').textContent = this.selectedMonth ? `${this.selectedMonth}월` : '';
+        document.getElementById('selected-day').textContent = this.selectedDay ? `${this.selectedDay}일` : '';
+        document.getElementById('selected-time').textContent = this.selectedTime ? `${this.selectedTime.korean}` : '';
+        document.getElementById('selected-year').textContent = this.selectedYear ? `${this.selectedYear.year}년(${this.selectedYear.zodiac}띠)` : '';
+    }
+
+    showCompleteButton() {
+        document.getElementById('complete-btn').style.display = 'block';
+    }
+
+    completeBirthInput() {
+        if (this.selectedMonth && this.selectedDay && this.selectedTime && this.selectedYear) {
+            const params = new URLSearchParams({
+                month: this.selectedMonth,
+                day: this.selectedDay,
+                time: this.selectedTime.time,
+                timeKorean: this.selectedTime.korean,
+                year: this.selectedYear.year,
+                zodiac: this.selectedYear.zodiac
+            });
+            
+            alert(`선택완료!\n${this.selectedYear.year}년 ${this.selectedMonth}월 ${this.selectedDay}일 ${this.selectedTime.korean}\n${this.selectedYear.zodiac}띠`);
+        } else {
+            alert('모든 정보를 선택해주세요.');
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    new BirthInputHandler();
+});
+</script>

@@ -324,7 +324,11 @@ end
 
 # Routes
 get '/' do
-  erb :index
+  erb :birth_input
+end
+
+get '/birth' do
+  erb :birth_input
 end
 
 post '/calculate' do
