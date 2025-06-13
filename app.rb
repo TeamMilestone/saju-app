@@ -8,6 +8,11 @@ require 'securerandom'
 set :public_folder, File.dirname(__FILE__) + '/public'
 set :static, true
 
+# Explicit route for PNG files (fallback if nginx doesn't work)
+get '/*.png' do |filename|
+  send_file File.join(settings.public_folder, "#{filename}.png")
+end
+
 # Database setup
 def initialize_database
   return @db if @db
