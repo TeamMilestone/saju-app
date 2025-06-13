@@ -4,6 +4,10 @@ require 'sqlite3'
 require 'json'
 require 'securerandom'
 
+# Configure static file serving
+set :public_folder, File.dirname(__FILE__) + '/public'
+set :static, true
+
 # Database setup
 def initialize_database
   return @db if @db
