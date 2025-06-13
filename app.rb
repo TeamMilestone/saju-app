@@ -10,7 +10,74 @@ set :static, true
 
 # Explicit route for PNG files (fallback if nginx doesn't work)
 get '/*.png' do |filename|
-  send_file File.join(settings.public_folder, "#{filename}.png")
+  file_path = File.join(settings.public_folder, "#{filename}.png")
+  if File.exist?(file_path)
+    content_type 'image/png'
+    send_file file_path
+  else
+    halt 404
+  end
+end
+
+# Additional explicit routes for zodiac images
+get '/자.png' do
+  content_type 'image/png'
+  send_file File.join(settings.public_folder, '자.png')
+end
+
+get '/축.png' do
+  content_type 'image/png'
+  send_file File.join(settings.public_folder, '축.png')
+end
+
+get '/인.png' do
+  content_type 'image/png'
+  send_file File.join(settings.public_folder, '인.png')
+end
+
+get '/묘.png' do
+  content_type 'image/png'
+  send_file File.join(settings.public_folder, '묘.png')
+end
+
+get '/진.png' do
+  content_type 'image/png'
+  send_file File.join(settings.public_folder, '진.png')
+end
+
+get '/사.png' do
+  content_type 'image/png'
+  send_file File.join(settings.public_folder, '사.png')
+end
+
+get '/오.png' do
+  content_type 'image/png'
+  send_file File.join(settings.public_folder, '오.png')
+end
+
+get '/미.png' do
+  content_type 'image/png'
+  send_file File.join(settings.public_folder, '미.png')
+end
+
+get '/신.png' do
+  content_type 'image/png'
+  send_file File.join(settings.public_folder, '신.png')
+end
+
+get '/유.png' do
+  content_type 'image/png'
+  send_file File.join(settings.public_folder, '유.png')
+end
+
+get '/술.png' do
+  content_type 'image/png'
+  send_file File.join(settings.public_folder, '술.png')
+end
+
+get '/해.png' do
+  content_type 'image/png'
+  send_file File.join(settings.public_folder, '해.png')
 end
 
 # Database setup
